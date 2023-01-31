@@ -1,8 +1,7 @@
 {
-  "name": "ant-design-pro",
-  "version": "5.2.0",
+  "name": "weshare",
+  "version": "0.0.0",
   "private": true,
-  "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
@@ -90,6 +89,5 @@
     "swagger-ui-dist": "^4.12.0",
     "typescript": "^4.5.0",
     "umi-serve": "^1.9.10"
-  },
-  "engines": { "node": ">=12.0.0" }
+  }
 }
