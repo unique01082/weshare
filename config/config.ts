@@ -10,7 +10,14 @@ const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
-  antd: {},
+  antd: {
+    config: {
+      colorPrimary: '#920B2D',
+      token: {
+        colorPrimary: '#920B2D',
+      },
+    },
+  },
   dva: {
     hmr: true,
   },
@@ -42,6 +49,7 @@ export default defineConfig({
     // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
     // https://ant.design/docs/react/customize-theme-variable-cn
     'root-entry-name': 'variable',
+    '@primary-color': '#920B2D',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild

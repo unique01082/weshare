@@ -6,7 +6,6 @@ const Footer: React.FC = () => {
   const intl = useIntl();
   const defaultMessage = intl.formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: '蚂蚁集团体验技术部出品',
   });
 
   const currentYear = new Date().getFullYear();
@@ -16,21 +15,21 @@ const Footer: React.FC = () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'We Share',
+          title: 'We Share',
+          href: 'https://wshare.vercel.app',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          href: 'https://github.com/unique01082/weshare',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'on Vercel',
+          title: 'on Vercel',
+          href: 'https://vercel.com/unique01082/weshare',
           blankTarget: true,
         },
       ]}
