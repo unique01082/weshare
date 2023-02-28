@@ -1,17 +1,9 @@
 ﻿export default [
   {
-    path: '/user',
+    name: 'login',
+    path: '/login',
     layout: false,
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './user/Login',
-      },
-      {
-        component: './404',
-      },
-    ],
+    component: './Login',
   },
   {
     path: '/welcome',
@@ -23,16 +15,27 @@
     path: '/admin',
     name: 'admin',
     icon: 'crown',
-    access: 'canAdmin',
+    access: 'isAdmin',
     routes: [
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
+        path: '/admin',
+        redirect: '/admin/sub-1',
       },
       {
-        component: './404',
+        path: '/admin/sub-1',
+        name: 'sub-1',
+        component: './Admin/Sub1',
+      },
+      {
+        path: '/admin/sub-1/sub-11',
+        name: 'sub-1-1',
+        component: './Admin/Sub1/Sub11',
+        hideInMenu: true,
+      },
+      {
+        path: '/admin/sub-2',
+        name: 'sub-2',
+        component: './Admin/Sub2',
       },
     ],
   },
@@ -47,6 +50,8 @@
     redirect: '/welcome',
   },
   {
+    path: '*',
+    layout: false,
     component: './404',
   },
 ];

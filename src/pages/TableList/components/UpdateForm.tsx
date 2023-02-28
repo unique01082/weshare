@@ -1,3 +1,4 @@
+import { Modal } from '@/components';
 import {
   ProFormDateTimePicker,
   ProFormRadio,
@@ -6,9 +7,8 @@ import {
   ProFormTextArea,
   StepsForm,
 } from '@ant-design/pro-components';
-import { Modal } from 'antd';
+import { FormattedMessage, useIntl } from '@umijs/max';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'umi';
 
 export type FormValueType = {
   target?: string;
@@ -21,7 +21,7 @@ export type FormValueType = {
 export type UpdateFormProps = {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onSubmit: (values: FormValueType) => Promise<void>;
-  updateModalVisible: boolean;
+  updateModalOpen: boolean;
   values: Partial<API.RuleListItem>;
 };
 
@@ -40,9 +40,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
             destroyOnClose
             title={intl.formatMessage({
               id: 'pages.searchTable.updateForm.ruleConfig',
-              defaultMessage: '规则配置',
             })}
-            visible={props.updateModalVisible}
+            open={props.updateModalOpen}
             footer={submitter}
             onCancel={() => {
               props.onCancel();
@@ -61,25 +60,18 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.basicConfig',
-          defaultMessage: '基本信息',
         })}
       >
         <ProFormText
           name="name"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleName.nameLabel',
-            defaultMessage: '规则名称',
           })}
           width="md"
           rules={[
             {
               required: true,
-              message: (
-                <FormattedMessage
-                  id="pages.searchTable.updateForm.ruleName.nameRules"
-                  defaultMessage="请输入规则名称！"
-                />
-              ),
+              message: <FormattedMessage id="pages.searchTable.updateForm.ruleName.nameRules" />,
             },
           ]}
         />
@@ -88,21 +80,14 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           width="md"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descLabel',
-            defaultMessage: '规则描述',
           })}
           placeholder={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descPlaceholder',
-            defaultMessage: '请输入至少五个字符',
           })}
           rules={[
             {
               required: true,
-              message: (
-                <FormattedMessage
-                  id="pages.searchTable.updateForm.ruleDesc.descRules"
-                  defaultMessage="请输入至少五个字符的规则描述！"
-                />
-              ),
+              message: <FormattedMessage id="pages.searchTable.updateForm.ruleDesc.descRules" />,
               min: 5,
             },
           ]}
@@ -115,7 +100,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.ruleProps.title',
-          defaultMessage: '配置规则属性',
         })}
       >
         <ProFormSelect
@@ -123,11 +107,10 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           width="md"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.object',
-            defaultMessage: '监控对象',
           })}
           valueEnum={{
-            0: '表一',
-            1: '表二',
+            0: 'Table 1',
+            1: 'Table 2',
           }}
         />
         <ProFormSelect
@@ -135,18 +118,16 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           width="md"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleProps.templateLabel',
-            defaultMessage: '规则模板',
           })}
           valueEnum={{
-            0: '规则模板一',
-            1: '规则模板二',
+            0: 'Rule 1',
+            1: 'Rule 2',
           }}
         />
         <ProFormRadio.Group
           name="type"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleProps.typeLabel',
-            defaultMessage: '规则类型',
           })}
           options={[
             {
@@ -167,7 +148,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.schedulingPeriod.title',
-          defaultMessage: '设定调度周期',
         })}
       >
         <ProFormDateTimePicker
@@ -175,16 +155,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           width="md"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.schedulingPeriod.timeLabel',
-            defaultMessage: '开始时间',
           })}
           rules={[
             {
               required: true,
               message: (
-                <FormattedMessage
-                  id="pages.searchTable.updateForm.schedulingPeriod.timeRules"
-                  defaultMessage="请选择开始时间！"
-                />
+                <FormattedMessage id="pages.searchTable.updateForm.schedulingPeriod.timeRules" />
               ),
             },
           ]}
@@ -193,12 +169,11 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           name="frequency"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.object',
-            defaultMessage: '监控对象',
           })}
           width="md"
           valueEnum={{
-            month: '月',
-            week: '周',
+            month: 'month',
+            week: 'week',
           }}
         />
       </StepsForm.StepForm>

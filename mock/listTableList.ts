@@ -11,14 +11,14 @@ const genList = (current: number, pageSize: number) => {
     tableListDataSource.push({
       key: index,
       disabled: i % 6 === 0,
-      href: 'https://ant.design',
+      href: '#',
       avatar: [
         'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
         'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
       ][i % 2],
       name: `TradeCode ${index}`,
-      owner: '曲丽丽',
-      desc: '这是一段描述',
+      owner: 'Admin',
+      desc: 'Description',
       callNo: Math.floor(Math.random() * 1000),
       status: Math.floor(Math.random() * 10) % 4,
       updatedAt: moment().format('YYYY-MM-DD'),
@@ -52,16 +52,18 @@ function getRule(req: Request, res: Response, u: string) {
     const sorter = JSON.parse(params.sorter);
     dataSource = dataSource.sort((prev, next) => {
       let sortNumber = 0;
-      Object.keys(sorter).forEach((key) => {
+      (Object.keys(sorter) as Array<keyof API.RuleListItem>).forEach((key) => {
+        let nextSort = next?.[key] as number;
+        let preSort = prev?.[key] as number;
         if (sorter[key] === 'descend') {
-          if (prev[key] - next[key] > 0) {
+          if (preSort - nextSort > 0) {
             sortNumber += -1;
           } else {
             sortNumber += 1;
           }
           return;
         }
-        if (prev[key] - next[key] > 0) {
+        if (preSort - nextSort > 0) {
           sortNumber += 1;
         } else {
           sortNumber += -1;
@@ -76,7 +78,7 @@ function getRule(req: Request, res: Response, u: string) {
     };
     if (Object.keys(filter).length > 0) {
       dataSource = dataSource.filter((item) => {
-        return Object.keys(filter).some((key) => {
+        return (Object.keys(filter) as Array<keyof API.RuleListItem>).some((key) => {
           if (!filter[key]) {
             return true;
           }
@@ -122,13 +124,13 @@ function postRule(req: Request, res: Response, u: string, b: Request) {
         const i = Math.ceil(Math.random() * 10000);
         const newRule: API.RuleListItem = {
           key: tableListDataSource.length,
-          href: 'https://ant.design',
+          href: '#',
           avatar: [
             'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
             'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
           ][i % 2],
           name,
-          owner: '曲丽丽',
+          owner: 'Admin',
           desc,
           callNo: Math.floor(Math.random() * 1000),
           status: Math.floor(Math.random() * 10) % 2,

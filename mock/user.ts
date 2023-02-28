@@ -44,7 +44,7 @@ export default {
     res.send({
       success: true,
       data: {
-        name: 'Serati Ma',
+        name: 'WeShare',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
         userid: '00000001',
         email: 'antdesign@alipay.com',
@@ -118,12 +118,11 @@ export default {
     },
   ],
   'POST /api/login/account': async (req: Request, res: Response) => {
-    const { password, username, type } = req.body;
+    const { password, username } = req.body;
     await waitTime(2000);
     if (password === '111111' && username === 'admin') {
       res.send({
         status: 'ok',
-        type,
         currentAuthority: 'admin',
       });
       access = 'admin';
@@ -132,25 +131,14 @@ export default {
     if (password === '111111' && username === 'user') {
       res.send({
         status: 'ok',
-        type,
         currentAuthority: 'user',
       });
       access = 'user';
       return;
     }
-    if (type === 'mobile') {
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin',
-      });
-      access = 'admin';
-      return;
-    }
 
     res.send({
       status: 'error',
-      type,
       currentAuthority: 'guest',
     });
     access = 'guest';

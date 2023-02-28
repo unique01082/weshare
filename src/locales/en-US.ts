@@ -11,7 +11,7 @@ export default {
   'layout.user.link.help': 'Help',
   'layout.user.link.privacy': 'Privacy',
   'layout.user.link.terms': 'Terms',
-  'app.copyright.produced': 'Written by Bao LE <bao.lq.it@gmail.com>',
+  'app.copyright.produced': 'by CEP - FPT Software',
   'app.preview.down.block': 'Download this page to your local project',
   'app.welcome.link.fetch-blocks': 'Get all block',
   'app.welcome.link.block-list': 'Quickly build standard, pages based on `block` development',

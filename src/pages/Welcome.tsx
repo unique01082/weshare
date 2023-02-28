@@ -1,46 +1,57 @@
+import { Card, theme, Typography } from '@/components';
 import { PageContainer } from '@ant-design/pro-components';
-import { Alert, Card, Typography } from 'antd';
+import { useModel } from '@umijs/max';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'umi';
-import styles from './Welcome.less';
-
-const CodePreview: React.FC = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
-);
 
 const Welcome: React.FC = () => {
-  const intl = useIntl();
+  const { initialState } = useModel('@@initialState');
+  const count = useModel('count', ({ count }) => count);
+  const { token } = theme.useToken();
 
   return (
     <PageContainer>
-      <Card>
-        <Alert
-          message={intl.formatMessage({
-            id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
-          })}
-          type="success"
-          showIcon
-          banner
+      <Card
+        style={{
+          borderRadius: 8,
+        }}
+        bodyStyle={{
+          backgroundImage:
+            initialState?.layoutSetting?.navTheme === 'realDark'
+              ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
+              : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
+        }}
+      >
+        <Typography.Title
           style={{
-            margin: -12,
-            marginBottom: 24,
+            color: token.colorTextHeading,
           }}
-        />
-        <Typography.Text strong>
-          <a
-            href="https://procomponents.ant.design/components/table"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-components</CodePreview>
+        >
+          Welcome to WeShare!
+        </Typography.Title>
+        <Typography.Title
+          level={3}
+          style={{
+            color: token.colorTextHeading,
+          }}
+        >
+          {TEST}
+        </Typography.Title>
+        <Typography.Title
+          level={3}
+          style={{
+            color: token.colorTextHeading,
+          }}
+        >
+          REACT_APP_ENV: {REACT_APP_ENV}
+        </Typography.Title>
+        <Typography.Title
+          level={4}
+          style={{
+            color: token.colorTextHeading,
+          }}
+        >
+          Counter: {count}
+        </Typography.Title>
       </Card>
     </PageContainer>
   );
