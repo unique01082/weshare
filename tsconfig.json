@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@baolq/unio": ["./src/components"],
       "@@/*": ["./src/.umi/*"],
       "@@test/*": ["./src/.umi-test/*"]
     }

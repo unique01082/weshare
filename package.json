@@ -49,6 +49,7 @@
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-components": "^2.3.37",
     "@ant-design/use-emotion-css": "1.0.4",
+    "@baolq/unio": "^0.0.2",
     "@umijs/route-utils": "^2.1.3",
     "ahooks": "^3.7.4",
     "antd": "^5.2.1",
