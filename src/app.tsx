@@ -4,10 +4,11 @@ import { SettingDrawer, Settings as LayoutSettings } from '@ant-design/pro-compo
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import { Button, Result } from 'antd';
+import { User } from 'firebase/auth';
 import React from 'react';
 import { httpSetting } from '../config/httpSetting';
 import layoutSetting from '../config/layoutSetting';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { getCurrentUser } from './services/firebase/auth';
 
 // const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
@@ -29,35 +30,19 @@ const UnAuthorizedPage: React.FC = () => {
 
 export async function getInitialState(): Promise<{
   layoutSetting?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentUser: User | null;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => User | null;
 }> {
-  const fetchUserInfo = async () => {
-    try {
-      const msg = await queryCurrentUser({
-        skipErrorHandler: true,
-      });
-      return msg.data;
-    } catch (error) {
-      history.push(loginPath);
-    }
-    return undefined;
-  };
-
-  const { location } = history;
-  if (location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
-
-    return {
-      fetchUserInfo,
-      currentUser,
-      layoutSetting: layoutSetting as Partial<LayoutSettings>,
-    };
+  const currentUser = await getCurrentUser();
+  console.log('currentUser :>> ', currentUser);
+  if (!currentUser) {
+    alert('redirect to login');
+    history.push(loginPath);
   }
 
   return {
-    fetchUserInfo,
+    currentUser,
     layoutSetting: layoutSetting as Partial<LayoutSettings>,
   };
 }

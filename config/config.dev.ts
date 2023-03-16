@@ -1,14 +1,10 @@
 import { defineConfig } from '@umijs/max';
 import { merge } from 'lodash';
 import config from './config';
+import { DEV_VARIABLES } from './env';
 
 export default defineConfig(
   merge(config, {
-    define: {
-      TEST: 'TEST value for dev environment',
-    },
-    clickToComponent: {
-      editor: 'vscode',
-    },
+    define: DEV_VARIABLES,
   }),
 );

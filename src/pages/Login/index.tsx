@@ -1,13 +1,12 @@
 import { Alert, message } from '@/components';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
+import { logInWithEmailAndPassword } from '@/services/firebase/auth';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel } from '@umijs/max';
-import { useTitle } from 'ahooks';
+import { useMount, useTitle } from 'ahooks';
 import React, { useState } from 'react';
-import { flushSync } from 'react-dom';
 import Settings from '../../../config/layoutSetting';
 import styles from './styles.less';
 
@@ -48,6 +47,12 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  useMount(() => {
+    if (initialState?.currentUser) {
+      const urlParams = new URL(window.location.href).searchParams;
+      history.push(urlParams.get('redirect') || '/');
+    }
+  });
 
   const intl = useIntl();
 
@@ -58,44 +63,32 @@ const Login: React.FC = () => {
     })} - ${Settings.title}`,
   );
 
-  const [{ status }, setUserLoginState] = useState<API.LoginResult>({});
-
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-    if (userInfo) {
-      flushSync(() => {
-        setInitialState((s: any) => ({
-          ...s,
-          currentUser: userInfo,
-        }));
-      });
-    }
-  };
+  const [loginFailed, setLoginFailed] = useState<boolean>(false);
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
-      const msg = await login(values);
-      if (msg.status === 'ok') {
-        localStorage.setItem('token', 'mock-token');
-        message.success(
-          intl.formatMessage({
-            id: 'pages.login.success',
-            defaultMessage: 'Login successful!',
-          }),
-        );
-
-        await fetchUserInfo();
-        const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
-        return;
-      }
-      setUserLoginState(msg);
+      const userCredential = await logInWithEmailAndPassword(values.username, values.password);
+      const currentUser = userCredential.user;
+      message.success(
+        intl.formatMessage({
+          id: 'pages.login.success',
+          defaultMessage: 'Login successful!',
+        }),
+      );
+      setInitialState((state: any) => ({
+        ...state,
+        currentUser,
+      }));
+      const urlParams = new URL(window.location.href).searchParams;
+      history.push(urlParams.get('redirect') || '/');
+      setLoginFailed(false);
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
         defaultMessage: 'Login failed, please try again!',
       });
       message.error(defaultLoginFailureMessage);
+      setLoginFailed(true);
     }
   };
 
@@ -118,7 +111,7 @@ const Login: React.FC = () => {
           subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           onFinish={handleSubmit}
         >
-          {status === 'error' && (
+          {loginFailed && (
             <LoginMessage
               content={intl.formatMessage({
                 id: 'pages.login.accountLogin.errorMessage',

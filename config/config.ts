@@ -1,12 +1,11 @@
 import { defineConfig } from '@umijs/max';
+import { PROD_VARIABLES } from './env';
 import layoutSetting from './layoutSetting';
 import openAPI from './openapi';
 import routes from './routes';
 
 export default defineConfig({
-  define: {
-    TEST: 'TEST value for production environment',
-  },
+  define: PROD_VARIABLES,
   hash: true,
   routes,
   theme: {},

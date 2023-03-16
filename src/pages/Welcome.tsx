@@ -34,7 +34,7 @@ const Welcome: React.FC = () => {
             color: token.colorTextHeading,
           }}
         >
-          {TEST}
+          {FIREBASE.apiKey}
         </Typography.Title>
         <Typography.Title
           level={3}

@@ -1,7 +1,6 @@
-import { Avatar, Spin } from '@/components';
-import { outLogin } from '@/services/ant-design-pro/api';
+import { Spin } from '@/components';
+import { logOut } from '@/services/firebase/auth';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { setAlpha } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
 import { stringify } from 'querystring';
@@ -20,7 +19,6 @@ const Name = () => {
 
   const nameClassName = useEmotionCss(({ token }) => {
     return {
-      width: '70px',
       height: '48px',
       overflow: 'hidden',
       lineHeight: '48px',
@@ -32,35 +30,12 @@ const Name = () => {
     };
   });
 
-  return <span className={`${nameClassName} anticon`}>{currentUser?.name}</span>;
-};
-
-const AvatarLogo = () => {
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
-
-  const avatarClassName = useEmotionCss(({ token }) => {
-    return {
-      marginRight: '8px',
-      color: token.colorPrimary,
-      verticalAlign: 'top',
-      background: setAlpha(token.colorBgContainer, 0.85),
-      [`@media only screen and (max-width: ${token.screenMD}px)`]: {
-        margin: 0,
-      },
-    };
-  });
-
-  return <Avatar size="small" className={avatarClassName} src={currentUser?.avatar} alt="avatar" />;
+  return <span className={`${nameClassName} anticon`}>{currentUser?.email}</span>;
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
-  /**
-   * Log out and save the current URL
-   */
   const loginOut = async () => {
-    await outLogin();
-    localStorage.removeItem('token');
+    await logOut();
     const { search, pathname } = window.location;
     const urlParams = new URL(window.location.href).searchParams;
     const redirect = urlParams.get('redirect');
@@ -90,13 +65,12 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     };
   });
   const { initialState, setInitialState } = useModel('@@initialState');
-
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
       const { key } = event;
       if (key === 'logout') {
         flushSync(() => {
-          setInitialState((s) => ({ ...s, currentUser: undefined }));
+          setInitialState((s) => ({ ...s, currentUser: null }));
         });
         loginOut();
         return;
@@ -124,7 +98,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const { currentUser } = initialState;
 
-  if (!currentUser || !currentUser.name) {
+  if (!currentUser) {
     return loading;
   }
 
@@ -162,7 +136,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       }}
     >
       <span className={actionClassName}>
-        <AvatarLogo />
         <Name />
       </span>
     </HeaderDropdown>
