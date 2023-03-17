@@ -45,6 +45,8 @@
       height="10%"
     />
   </div>
+
+  <div id="recaptcha-container"></div>
     `;
   }
 })();

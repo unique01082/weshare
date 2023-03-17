@@ -8,5 +8,7 @@ declare namespace API {
   type LoginParams = {
     username: string;
     password: string;
+    mobile: string;
+    code: string;
   };
 }

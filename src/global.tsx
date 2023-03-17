@@ -1,9 +1,29 @@
 import { Button, message, notification } from '@/components';
 import { useIntl } from '@umijs/max';
+
+import {
+  addAllCsses,
+  addAllSelectors,
+  addAllStyles,
+  addAllVariants,
+  createStyleParser,
+  createVariantParser,
+  parsersManager,
+} from 'react-twilight';
 import defaultSettings from '../config/layoutSetting';
 
 const { pwa } = defaultSettings;
 const isHttps = document.location.protocol === 'https:';
+addAllStyles();
+addAllSelectors();
+addAllVariants();
+addAllCsses();
+
+const fontSizeVariantParser = createVariantParser('textSize');
+const objectFitStyleParser = createStyleParser('objectFit');
+
+parsersManager.add(fontSizeVariantParser);
+parsersManager.add(objectFitStyleParser);
 
 const clearCache = () => {
   // remove all caches

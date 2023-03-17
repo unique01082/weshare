@@ -35,9 +35,7 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => User | null;
 }> {
   const currentUser = await getCurrentUser();
-  console.log('currentUser :>> ', currentUser);
   if (!currentUser) {
-    alert('redirect to login');
     history.push(loginPath);
   }
 

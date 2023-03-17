@@ -30,7 +30,11 @@ const Name = () => {
     };
   });
 
-  return <span className={`${nameClassName} anticon`}>{currentUser?.email}</span>;
+  return (
+    <span className={`${nameClassName} anticon`}>
+      {currentUser?.displayName ?? currentUser?.email ?? currentUser?.phoneNumber}
+    </span>
+  );
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
