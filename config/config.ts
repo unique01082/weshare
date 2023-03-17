@@ -27,7 +27,7 @@ export default defineConfig({
   locale: {
     default: 'en-US',
     antd: true,
-    baseNavigator: true,
+    // baseNavigator: true,
   },
   antd: {},
   request: {},

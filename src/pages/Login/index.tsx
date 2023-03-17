@@ -272,7 +272,7 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: '请输入用户名!',
+                    message: 'Please enter a username!',
                   },
                 ]}
               />
@@ -285,7 +285,7 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: '请输入密码！',
+                    message: 'Please enter your password! ',
                   },
                 ]}
               />
@@ -322,18 +322,18 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.captcha.placeholder',
-                  defaultMessage: '请输入验证码',
+                  defaultMessage: 'Please enter the verification code',
                 })}
                 captchaTextRender={(timing, count) => {
                   if (timing) {
                     return `${count} ${intl.formatMessage({
-                      id: 'pages.getCaptchaSecondText',
-                      defaultMessage: '获取验证码',
+                      id: 'pages. getCaptchaSecondText',
+                      defaultMessage: 'Get verification code',
                     })}`;
                   }
                   return intl.formatMessage({
                     id: 'pages.login.phoneLogin.getVerificationCode',
-                    defaultMessage: '获取验证码',
+                    defaultMessage: 'Get verification code',
                   });
                 }}
                 name="code"
@@ -343,12 +343,15 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.captcha.required"
-                        defaultMessage="请输入验证码！"
+                        defaultMessage="Please enter the verification code!"
                       />
                     ),
                   },
                 ]}
                 onGetCaptcha={async (phone) => {
+                  if (!phone) {
+                    return;
+                  }
                   await sendVerifyCode(phone);
                   message.success('Send success');
                 }}
