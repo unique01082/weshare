@@ -43,4 +43,12 @@ export default defineConfig({
   requestRecord: {},
 
   reactRouter5Compat: {},
+
+  proxy: {
+    '/api/': {
+      target: 'https://weshare-server-weld.vercel.app',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+  },
 });

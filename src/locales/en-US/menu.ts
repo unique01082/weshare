@@ -7,6 +7,7 @@ export default {
   'menu.admin.sub-1-1': 'Sub 1.1',
   'menu.admin.sub-2': 'Sub 2',
   'menu.login': 'Login',
+  'menu.user': 'User Management',
   'menu.register': 'Register',
   'menu.register-result': 'Register Result',
   'menu.dashboard': 'Dashboard',

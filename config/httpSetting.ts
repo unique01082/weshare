@@ -18,6 +18,7 @@ interface ResponseStructure {
 }
 
 export const httpSetting: RequestConfig = {
+  // baseURL: ADMIN_SERVER.host + ADMIN_SERVER.prefix,
   errorConfig: {
     // error thrown
     errorThrower: (res) => {
@@ -82,8 +83,6 @@ export const httpSetting: RequestConfig = {
       if (!config.headers) {
         config.headers = {};
       }
-
-      config.headers.Authorization = localStorage.getItem('token')!;
 
       return { ...config };
     },

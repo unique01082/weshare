@@ -18,7 +18,7 @@ import { firebaseApp } from '.';
 
 export const firestore = getFirestore(firebaseApp);
 
-export class BaseService<T> {
+export class BaseFirestoreService<T> {
   private firestore: Firestore;
   private collectionName: string;
 
@@ -77,4 +77,4 @@ export class BaseService<T> {
   };
 }
 
-export const eventService = new BaseService<Event>(firestore, 'events');
+export const eventService = new BaseFirestoreService<Event>(firestore, 'events');

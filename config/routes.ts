@@ -8,8 +8,14 @@
   {
     path: '/welcome',
     name: 'welcome',
-    icon: 'smile',
+    icon: 'home',
     component: './Welcome',
+  },
+  {
+    path: '/user',
+    name: 'user',
+    icon: 'user',
+    component: './User',
   },
   {
     path: '/admin',

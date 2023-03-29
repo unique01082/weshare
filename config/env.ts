@@ -1,4 +1,5 @@
 import { FirebaseOptions } from 'firebase/app';
+import { merge } from 'lodash';
 
 export const firebaseConfig: FirebaseOptions = {
   apiKey: 'AIzaSyCtzd5_tsNFmlnPOaKQrD4QqmB1c4Sm13U',
@@ -9,8 +10,16 @@ export const firebaseConfig: FirebaseOptions = {
   appId: '1:674295051461:web:7d111edc85510ba144acac',
 };
 
-export const BASE_VARIABLES = Object.assign({}, { FIREBASE: firebaseConfig });
+export const adminServer = {
+  host: 'http://localhost:3000',
+  prefix: '/api',
+};
 
-export const DEV_VARIABLES = Object.assign({}, BASE_VARIABLES, {});
+export const BASE_VARIABLES = Object.assign(
+  {},
+  { FIREBASE: firebaseConfig, ADMIN_SERVER: adminServer },
+);
 
-export const PROD_VARIABLES = Object.assign({}, BASE_VARIABLES, {});
+export const DEV_VARIABLES = merge({}, BASE_VARIABLES, {});
+
+export const PROD_VARIABLES = merge({}, BASE_VARIABLES, {});
